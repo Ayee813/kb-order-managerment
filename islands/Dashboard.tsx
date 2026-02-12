@@ -92,56 +92,55 @@ export default function Dashboard() {
     };
 
     return (
-        <div class="kitty-canvas" style={{ padding: "2rem", width: "100%", maxWidth: "1200px" }}>
-            <div style={{ marginBottom: "2rem" }}>
-                <h2 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>Hello, Owner! 👋</h2>
-                <p style={{ color: "var(--gray-2)" }}>Here is what's happening in your store today.</p>
+        <div class="kitty-canvas dashboard-container">
+            <div class="dashboard-header">
+                <h2 class="welcome-text">{_('Hello, Owner!')} 👋</h2>
+                <p class="subtitle-text">{_("Here is what's happening in your store today.")}</p>
             </div>
 
             {/* Quick Actions */}
             <div class="quick-actions">
-                <a href="/orders" class="btn btn-primary" style={{ padding: "0.75rem 1.5rem", fontSize: "1rem", color: "var(--background-color)" }}>
-                    <Icons.IconPlus /> New Order
+                <a href="/orders" class="btn btn-primary action-btn">
+                    <Icons.IconPlus /> {_('New Order')}
                 </a>
-                <a href="/bill-printing" class="btn btn-ghost" style={{ padding: "0.75rem 1.5rem", fontSize: "1rem" }}>
-                    <Icons.IconPrinter /> Print Bills
+                <a href="/bill-printing" class="btn btn-ghost action-btn">
+                    <Icons.IconPrinter /> {_('Print Bills')}
                 </a>
             </div>
 
             {/* KPI Grid */}
             <div class="dashboard-grid">
-                <div class="card">
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <div style={{ padding: "12px", background: "#e0f2fe", borderRadius: "8px", color: "#0284c7" }}>
+                <div class="card kpi-card">
+                    <div class="kpi-content">
+                        <div class="kpi-icon-wrapper bg-blue">
                             <Icons.IconClipboardPlus size={24} />
                         </div>
                         <div>
-                            <div class="stat-label">Total Orders</div>
+                            <div class="stat-label">{_('Total Orders')}</div>
                             <div class="stat-value">{loading ? "-" : stats.totalOrders}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <div style={{ padding: "12px", background: "#fff7ed", borderRadius: "8px", color: "#ea580c" }}>
+                <div class="card kpi-card">
+                    <div class="kpi-content">
+                        <div class="kpi-icon-wrapper bg-orange">
                             <Icons.IconLoader2 size={24} />
                         </div>
                         <div>
-                            <div class="stat-label">Pending</div>
+                            <div class="stat-label">{_('Pending')}</div>
                             <div class="stat-value">{loading ? "-" : stats.pendingOrders}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <div style={{ padding: "12px", background: "#ecfccb", borderRadius: "8px", color: "#65a30d" }}>
-                            {/* Using TextIncrease as a proxy for 'Growth/Money' if no dollar icon available */}
+                <div class="card kpi-card">
+                    <div class="kpi-content">
+                        <div class="kpi-icon-wrapper bg-green">
                             <Icons.IconTextIncrease size={24} />
                         </div>
                         <div>
-                            <div class="stat-label">Est. Revenue</div>
+                            <div class="stat-label">{_('Est. Revenue')}</div>
                             <div class="stat-value">{loading ? "-" : formatCurrency(stats.totalRevenue)}</div>
                         </div>
                     </div>
@@ -149,38 +148,40 @@ export default function Dashboard() {
             </div>
 
             {/* Recent Orders */}
-            <div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: "600" }}>Recent Activity</h3>
-                    <a href="/orders" style={{ color: "var(--primary-color)", textDecoration: "none", fontWeight: "500" }}>View All</a>
+            <div class="recent-orders-section">
+                <div class="section-header">
+                    <h3 class="section-title">{_('Recent Activity')}</h3>
+                    <a href="/orders" class="view-all-link">{_('View All')}</a>
                 </div>
 
-                <div class="modern-table-container" style={{ marginTop: 0 }}>
+                <div class="modern-table-container">
                     {loading ? (
-                        <div style={{ padding: "2rem", textAlign: "center" }}>Loading recent activity...</div>
+                        <div class="loading-state">{_('Loading recent activity...')}</div>
                     ) : (
                         <table class="modern-table">
                             <thead>
                                 <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Product</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
+                                    <th>{_('Order ID')}</th>
+                                    <th>{_('Customer')}</th>
+                                    <th>{_('Product')}</th>
+                                    <th>{_('Amount')}</th>
+                                    <th>{_('Status')}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {orders.length > 0 ? orders.map(o => (
                                     <tr key={o.Order_ID}>
-                                        <td>{o.Order_ID}</td>
-                                        <td>{o.Customer_Name}</td>
-                                        <td>{o.Product}</td>
-                                        <td>{o.Price}</td>
-                                        <td>{getStatusBadge(o.Status)}</td>
+                                        <td data-label="Order ID">{o.Order_ID}</td>
+                                        <td data-label="Customer">
+                                            <span class="customer-name">{o.Customer_Name}</span>
+                                        </td>
+                                        <td data-label="Product" class="product-cell">{o.Product}</td>
+                                        <td data-label="Amount" class="amount-cell">{o.Price}</td>
+                                        <td data-label="Status">{getStatusBadge(o.Status)}</td>
                                     </tr>
                                 )) : (
                                     <tr>
-                                        <td colSpan={5} style={{ textAlign: "center", padding: "2rem" }}>No recent orders.</td>
+                                        <td colSpan={5} class="empty-state">{_('No recent orders.')}</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -188,6 +189,212 @@ export default function Dashboard() {
                     )}
                 </div>
             </div>
+
+            <style jsx>{`
+                .dashboard-container {
+                    padding: 2rem;
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    /* Add padding bottom to account for mobile nav bar */
+                    padding-bottom: 80px; 
+                }
+                
+                .dashboard-header {
+                    margin-bottom: 2rem;
+                }
+                .welcome-text {
+                    font-size: 2rem;
+                    margin-bottom: 0.5rem;
+                    font-weight: 700;
+                    color: var(--text-color);
+                }
+                .subtitle-text {
+                    color: var(--gray-2);
+                    font-size: 1.1rem;
+                }
+
+                .quick-actions {
+                    display: flex;
+                    gap: 1rem;
+                    margin-bottom: 2rem;
+                }
+                .action-btn {
+                    padding: 0.75rem 1.5rem;
+                    font-size: 1rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                /* Grid Layout */
+                .dashboard-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 1.5rem;
+                    margin-bottom: 3rem;
+                }
+                
+                .kpi-card {
+                    padding: 1.5rem;
+                    border-radius: 16px;
+                    border: 1px solid var(--gray-1);
+                    background: var(--back);
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                    transition: transform 0.2s ease;
+                }
+                .kpi-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+                }
+                
+                .kpi-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+                .kpi-icon-wrapper {
+                    padding: 12px;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .bg-blue { background: #e0f2fe; color: #0284c7; }
+                .bg-orange { background: #fff7ed; color: #ea580c; }
+                .bg-green { background: #ecfccb; color: #65a30d; }
+                
+                .stat-label {
+                    color: var(--gray-2);
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    margin-bottom: 0.25rem;
+                }
+                .stat-value {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: var(--text-color);
+                    line-height: 1;
+                }
+
+                /* Recent Activity */
+                .section-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1.5rem;
+                }
+                .section-title {
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    color: var(--text-color);
+                }
+                .view-all-link {
+                    color: var(--primary-color);
+                    text-decoration: none;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                }
+                .view-all-link:hover {
+                    text-decoration: underline;
+                }
+
+                .modern-table-container {
+                    background: var(--back);
+                    border-radius: 16px;
+                    border: 1px solid var(--gray-1);
+                    overflow: hidden;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                    margin-top: 0;
+                }
+                
+                .modern-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .modern-table th {
+                    background: var(--gray-1); /* Slight bg for header */
+                    color: var(--gray-2);
+                    font-weight: 600;
+                    text-align: left;
+                    padding: 1rem 1.5rem;
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                }
+                .modern-table td {
+                    padding: 1rem 1.5rem;
+                    border-bottom: 1px solid var(--gray-1);
+                    color: var(--text-color);
+                    font-size: 0.95rem;
+                }
+                .modern-table tr:last-child td {
+                    border-bottom: none;
+                }
+                
+                .customer-name {
+                    font-weight: 500;
+                }
+                .amount-cell {
+                    font-weight: 600;
+                }
+                
+                .loading-state, .empty-state {
+                    padding: 3rem;
+                    text-align: center;
+                    color: var(--gray-2);
+                }
+
+                @media (max-width: 768px) {
+                    .dashboard-container {
+                        padding: 1rem;
+                         /* More bottom padding for nav bar + safety */
+                        padding-bottom: 100px;
+                    }
+                    
+                    .welcome-text {
+                        font-size: 1.75rem;
+                    }
+                    
+                    /* Make grid stack nicely */
+                    .dashboard-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                    }
+                    
+                    /* Responsive Table: Card View for Mobile */
+                    .modern-table thead {
+                        display: none;
+                    }
+                    .modern-table, .modern-table tbody, .modern-table tr, .modern-table td {
+                        display: block;
+                        width: 100%;
+                    }
+                    .modern-table tr {
+                        margin-bottom: 1rem;
+                        background: var(--back);
+                        border-radius: 12px;
+                        border: 1px solid var(--gray-1);
+                        padding: 1rem;
+                    }
+                    .modern-table td {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0.5rem 0;
+                        border: none;
+                        text-align: right;
+                    }
+                    .modern-table td::before {
+                        content: attr(data-label);
+                        float: left;
+                        font-weight: 600;
+                        color: var(--gray-2);
+                        font-size: 0.85rem;
+                    }
+                    /* Special case for status to be full width or right aligned properly */
+                }
+            `}</style>
         </div>
     );
 }
