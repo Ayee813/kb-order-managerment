@@ -93,21 +93,6 @@ export default function Dashboard() {
 
     return (
         <div class="kitty-canvas dashboard-container">
-            <div class="dashboard-header">
-                <h2 class="welcome-text">{_('Hello, Owner!')} 👋</h2>
-                <p class="subtitle-text">{_("Here is what's happening in your store today.")}</p>
-            </div>
-
-            {/* Quick Actions */}
-            <div class="quick-actions">
-                <a href="/orders" class="btn btn-primary action-btn">
-                    <Icons.IconPlus /> {_('New Order')}
-                </a>
-                <a href="/bill-printing" class="btn btn-ghost action-btn">
-                    <Icons.IconPrinter /> {_('Print Bills')}
-                </a>
-            </div>
-
             {/* KPI Grid */}
             <div class="dashboard-grid">
                 <div class="card kpi-card">
@@ -265,9 +250,9 @@ export default function Dashboard() {
                 .bg-green { background: #ecfccb; color: #65a30d; }
                 
                 .stat-label {
-                    color: var(--gray-2);
-                    font-size: 0.9rem;
-                    font-weight: 500;
+                    color: var(--text-primary);
+                    font-size: 0.95rem;
+                    font-weight: 600;
                     margin-bottom: 0.25rem;
                 }
                 .stat-value {
@@ -313,8 +298,8 @@ export default function Dashboard() {
                     border-collapse: collapse;
                 }
                 .modern-table th {
-                    background: var(--gray-1); /* Slight bg for header */
-                    color: var(--gray-2);
+                    background: var(--primary-color); 
+                    color: white;
                     font-weight: 600;
                     text-align: left;
                     padding: 1rem 1.5rem;

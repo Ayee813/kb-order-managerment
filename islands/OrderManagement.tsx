@@ -185,7 +185,6 @@ export default function OrderManagement() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
                 <div>
                     <h3 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "700" }}>Order Management</h3>
-                    <p style={{ margin: 0, color: "var(--gray-2)", fontSize: "0.9rem" }}>Manage and track your customer orders</p>
                 </div>
                 <button
                     class="btn btn-primary"

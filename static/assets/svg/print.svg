@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- License: PD. Made by Mary Akveo: https://maryakveo.com/ -->
 <svg fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" id="print" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
-  <path id="secondary" d="M17,7H7V4A1,1,0,0,1,8,3h8a1,1,0,0,1,1,1Zm0,13V12H7v8a1,1,0,0,0,1,1h8A1,1,0,0,0,17,20Z" style="fill: #d4d4d4;"></path>
-  <path id="primary" d="M17,17h3a1,1,0,0,0,1-1V8a1,1,0,0,0-1-1H4A1,1,0,0,0,3,8v8a1,1,0,0,0,1,1H7" style="fill: none; stroke: #b0b0b0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
-  <path id="primary-2" data-name="primary" d="M17,7H7V4A1,1,0,0,1,8,3h8a1,1,0,0,1,1,1Zm0,13V12H7v8a1,1,0,0,0,1,1h8A1,1,0,0,0,17,20Z" style="fill: none; stroke: #b0b0b0; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+  <path id="secondary" d="M17,7H7V4A1,1,0,0,1,8,3h8a1,1,0,0,1,1,1Zm0,13V12H7v8a1,1,0,0,0,1,1h8A1,1,0,0,0,17,20Z" style="fill: #880e4f;"></path>
+  <path id="primary" d="M17,17h3a1,1,0,0,0,1-1V8a1,1,0,0,0-1-1H4A1,1,0,0,0,3,8v8a1,1,0,0,0,1,1H7" style="fill: none; stroke: #880e4f; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+  <path id="primary-2" data-name="primary" d="M17,7H7V4A1,1,0,0,1,8,3h8a1,1,0,0,1,1,1Zm0,13V12H7v8a1,1,0,0,0,1,1h8A1,1,0,0,0,17,20Z" style="fill: none; stroke: #880e4f; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
 </svg>
