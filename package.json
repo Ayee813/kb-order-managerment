@@ -1,0 +1,26 @@
+{
+  "name": "kb-order-managerment",
+  "version": "1.0.0",
+  "description": "English | [中文（简体字）](./readme.i18n/readme.zh-CN.md) | [中文（香港字）](./readme.i18n/readme.zh-HK.md) | [中文（正體字）](./readme.i18n/readme.zh-TW.md)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayee813/kb-order-managerment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ayee813/kb-order-managerment/issues"
+  },
+  "homepage": "https://github.com/Ayee813/kb-order-managerment#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0"
+  }
+}

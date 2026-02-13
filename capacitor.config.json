@@ -1,0 +1,9 @@
+{
+  "appId": "com.example.app",
+  "appName": "kb-order",
+  "webDir": "static",
+  "server": {
+    "url": "https://kb-order-managerment.deno.dev",
+    "cleartext": true
+  }
+}
