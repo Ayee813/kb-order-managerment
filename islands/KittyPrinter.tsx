@@ -22,7 +22,7 @@ function properStuff(stuff: StuffData) {
                 brightness: 128,
                 textContent: '',
                 textAlign: 'start',
-                textFontFamily: 'sans-serif',
+                textFontFamily: 'Noto Sans Lao',
                 textFontSize: 16,
                 textLineSpacing: (stuff.textFontSize || 16) / 2 | 0,
                 textFontWeight: '',

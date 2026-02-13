@@ -181,11 +181,9 @@ export default function OrderManagement() {
     };
 
     return (
-        <div class="kitty-canvas" style={{ padding: "1.5rem", maxWidth: "100%" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-                <div>
-                    <h3 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "700" }}>Order Management</h3>
-                </div>
+        <div class="kitty-canvas orders-page-container">
+            <div class="orders-header">
+                <h3 class="orders-title">Order Management</h3>
                 <button
                     class="btn btn-primary"
                     onClick={() => {
@@ -199,24 +197,24 @@ export default function OrderManagement() {
                         setShowBranchDropdown(false);
                     }}
                 >
-                    <Icons.IconPlus size={18} /> New Order
+                    <Icons.IconPlus size={18} /> New
                 </button>
             </div>
 
             {error && (
-                <div style={{ padding: "1rem", background: "#fee2e2", color: "#b91c1c", borderRadius: "8px", marginBottom: "1rem" }}>
+                <div class="error-banner">
                     {error}
                 </div>
             )}
 
             <div class="modern-table-container">
                 {loading && !orders.length ? (
-                    <div style={{ padding: "3rem", textAlign: "center", color: "var(--gray-2)" }}>
+                    <div class="loading-state">
                         <Icons.IconLoader2 class="icon-spin" size={24} />
                         <p>Loading orders...</p>
                     </div>
                 ) : (
-                    <div style={{ overflowX: "auto" }}>
+                    <div class="table-scroll-container">
                         <table class="modern-table">
                             <thead>
                                 <tr>
@@ -228,9 +226,9 @@ export default function OrderManagement() {
                                 {orders.map((o) => (
                                     <tr key={o.rowIndex}>
                                         {HEADERS.map((h) => (
-                                            <td>
+                                            <td data-label={h.replace(/_/g, " ")}>
                                                 {h === "Image_Link" && o[h] ? (
-                                                    <a href={o[h]} target="_blank" class="btn btn-ghost" style={{ padding: "0.25rem 0.5rem", fontSize: "0.75rem" }}>
+                                                    <a href={o[h]} target="_blank" class="btn btn-ghost view-image-btn">
                                                         <Icons.IconPhoto size={16} /> View
                                                     </a>
                                                 ) : h === "Status" ? (
@@ -242,19 +240,17 @@ export default function OrderManagement() {
                                                 )}
                                             </td>
                                         ))}
-                                        <td>
-                                            <div style={{ display: "flex", gap: "0.5rem" }}>
+                                        <td data-label="Actions">
+                                            <div class="action-buttons">
                                                 <a
                                                     href={`/bill-printing?orderId=${o.Order_ID}`}
-                                                    class="btn btn-ghost"
-                                                    style={{ padding: "0.4rem", color: "var(--text-color)" }}
+                                                    class="btn btn-ghost action-btn"
                                                     title="Print Bill"
                                                 >
                                                     <Icons.IconPrinter size={18} />
                                                 </a>
                                                 <button
-                                                    class="btn btn-ghost"
-                                                    style={{ padding: "0.4rem" }}
+                                                    class="btn btn-ghost action-btn"
                                                     onClick={() => {
                                                         setEditingOrder(o);
                                                         setBranchSearch(o.Branch);
@@ -265,8 +261,7 @@ export default function OrderManagement() {
                                                     <Icons.IconEdit size={18} />
                                                 </button>
                                                 <button
-                                                    class="btn btn-ghost"
-                                                    style={{ padding: "0.4rem", color: "#ff5252" }}
+                                                    class="btn btn-ghost action-btn delete-btn"
                                                     onClick={() => handleDelete(o.rowIndex)}
                                                     title="Delete"
                                                 >
@@ -278,7 +273,7 @@ export default function OrderManagement() {
                                 ))}
                                 {orders.length === 0 && !loading && (
                                     <tr>
-                                        <td colSpan={HEADERS.length + 1} style={{ textAlign: "center", padding: "3rem", color: "var(--gray-2)" }}>
+                                        <td colSpan={HEADERS.length + 1} class="empty-state">
                                             No orders found. Create one to get started.
                                         </td>
                                     </tr>
@@ -295,10 +290,10 @@ export default function OrderManagement() {
                     setBranchSearch("");
                     setShowBranchDropdown(false);
                 }}>
-                    <div class="modal-content" style={{ maxWidth: "1200px", width: "95%" }} onClick={(e) => e.stopPropagation()}>
+                    <div class="modal-content orders-modal" onClick={(e) => e.stopPropagation()}>
                         <div class="modal-header">
                             <h4 class="modal-title">{editingOrder.rowIndex !== undefined ? "Edit Order" : "New Order"}</h4>
-                            <button class="btn btn-ghost" style={{ padding: "0.25rem" }} onClick={() => {
+                            <button class="btn btn-ghost close-btn" onClick={() => {
                                 setEditingOrder(null);
                                 setBranchSearch("");
                                 setShowBranchDropdown(false);
@@ -308,13 +303,13 @@ export default function OrderManagement() {
                         </div>
 
                         <form onSubmit={handleSave}>
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                            <div class="form-grid">
                                 {HEADERS.map((h) => {
                                     if (h === "Image_Link") {
                                         return (
                                             <div class="form-group">
                                                 <label class="form-label">Upload Image</label>
-                                                <div style={{ border: "1px dashed var(--gray-1)", padding: "1rem", borderRadius: "6px", textAlign: "center" }}>
+                                                <div class="upload-container">
                                                     <input
                                                         type="file"
                                                         accept="image/*"
@@ -322,13 +317,13 @@ export default function OrderManagement() {
                                                         style={{ display: "none" }}
                                                         onChange={(e) => setSelectedImage((e.target as HTMLInputElement).files?.[0] || null)}
                                                     />
-                                                    <label htmlFor="file-upload" class="btn btn-ghost" style={{ cursor: "pointer", width: "100%" }}>
+                                                    <label htmlFor="file-upload" class="btn btn-ghost file-label">
                                                         <Icons.IconPhotoPlus size={20} />
                                                         {selectedImage ? selectedImage.name : "Choose an image"}
                                                     </label>
                                                     {editingOrder[h] && !selectedImage && (
-                                                        <p style={{ fontSize: "0.75rem", marginTop: "0.5rem", color: "var(--gray-2)" }}>
-                                                            Current: <a href={editingOrder[h]} target="_blank" style={{ textDecoration: "underline" }}>View Image</a>
+                                                        <p class="current-image-hint">
+                                                            Current: <a href={editingOrder[h]} target="_blank">View Image</a>
                                                         </p>
                                                     )}
                                                 </div>
@@ -347,14 +342,13 @@ export default function OrderManagement() {
                                             <div class="form-group">
                                                 <label class="form-label">{h.replace(/_/g, " ")}</label>
                                                 <select
-                                                    class="form-input"
+                                                    class="form-input pointer"
                                                     value={(editingOrder as any)[h] || ""}
                                                     onChange={(e) => {
                                                         const newLogistic = (e.target as HTMLSelectElement).value;
                                                         setEditingOrder({ ...editingOrder, [h]: newLogistic, Branch: "" });
                                                         setBranchSearch("");
                                                     }}
-                                                    style={{ cursor: "pointer" }}
                                                     required
                                                 >
                                                     <option value="">Select Logistic</option>
@@ -377,7 +371,7 @@ export default function OrderManagement() {
                                             );
 
                                             return (
-                                                <div class="form-group" style={{ position: "relative" }}>
+                                                <div class="form-group relative">
                                                     <label class="form-label">{h.replace(/_/g, " ")}</label>
                                                     <input
                                                         class="form-input"
@@ -399,20 +393,7 @@ export default function OrderManagement() {
                                                         autoComplete="off"
                                                     />
                                                     {showBranchDropdown && filteredBranches.length > 0 && (
-                                                        <div style={{
-                                                            position: "absolute",
-                                                            top: "100%",
-                                                            left: 0,
-                                                            right: 0,
-                                                            maxHeight: "200px",
-                                                            overflowY: "auto",
-                                                            background: "var(--surface-color)",
-                                                            border: "1px solid var(--border-color)",
-                                                            borderRadius: "6px",
-                                                            marginTop: "4px",
-                                                            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                                                            zIndex: 1000
-                                                        }}>
+                                                        <div class="branch-dropdown">
                                                             {filteredBranches.map((option) => (
                                                                 <div
                                                                     key={option.value}
@@ -424,14 +405,7 @@ export default function OrderManagement() {
                                                                         setBranchSearch(option.value);
                                                                         setShowBranchDropdown(false);
                                                                     }}
-                                                                    style={{
-                                                                        padding: "0.75rem 1rem",
-                                                                        cursor: "pointer",
-                                                                        borderBottom: "1px solid var(--border-color)",
-                                                                        transition: "background 0.15s ease"
-                                                                    }}
-                                                                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--secondary-color)")}
-                                                                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                                                                    class="branch-option"
                                                                 >
                                                                     {option.label}
                                                                 </div>
@@ -461,10 +435,9 @@ export default function OrderManagement() {
                                             <div class="form-group">
                                                 <label class="form-label">{h.replace(/_/g, " ")}</label>
                                                 <select
-                                                    class="form-input"
+                                                    class="form-input pointer"
                                                     value={(editingOrder as any)[h] || ""}
                                                     onChange={(e) => setEditingOrder({ ...editingOrder, [h]: (e.target as HTMLSelectElement).value })}
-                                                    style={{ cursor: "pointer" }}
                                                     required
                                                 >
                                                     <option value="">Select Status</option>
@@ -519,19 +492,256 @@ export default function OrderManagement() {
                                 })}
                             </div>
 
-                            <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
+                            <div class="modal-footer">
                                 <button type="button" class="btn btn-ghost" onClick={() => { setEditingOrder(null); setSelectedImage(null); }}>
                                     Cancel
                                 </button>
-                                <button type="submit" class="btn btn-primary" disabled={loading} style={{ minWidth: "100px" }}>
-                                    {loading ? <Icons.IconLoader2 class="icon-spin" size={18} /> : "Save Order"}
+                                <button type="submit" class="btn btn-primary save-btn" disabled={loading}>
+                                    {loading ? <Icons.IconLoader2 class="icon-spin" size={18} /> : "Save"}
                                 </button>
                             </div>
                         </form>
                     </div >
                 </div >
-            )
-            }
-        </div >
+            )}
+
+            <style jsx>{`
+                .orders-page-container {
+                    padding: 1.5rem;
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+                
+                .orders-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1.5rem;
+                }
+                
+                .orders-title {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: var(--text-color);
+                }
+                
+                .error-banner {
+                    padding: 1rem;
+                    background: #fee2e2;
+                    color: #b91c1c;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                }
+                
+                .loading-state {
+                    padding: 3rem;
+                    text-align: center;
+                    color: var(--gray-2);
+                }
+                
+                .table-scroll-container {
+                    overflow-x: auto;
+                    width: 100%;
+                }
+                
+                .view-image-btn {
+                    padding: 0.25rem 0.5rem;
+                    font-size: 0.75rem;
+                }
+                
+                .action-buttons {
+                    display: flex;
+                    gap: 0.5rem;
+                }
+                
+                .action-btn {
+                    padding: 0.4rem;
+                }
+                
+                .delete-btn {
+                    color: #ff5252;
+                }
+                
+                .empty-state {
+                    text-align: center;
+                    padding: 3rem;
+                    color: var(--gray-2);
+                }
+                
+                /* Modal Styles */
+                .orders-modal {
+                    max-width: 1200px;
+                    width: 95%;
+                }
+                
+                .close-btn {
+                    padding: 0.25rem;
+                }
+                
+                .form-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1.5rem;
+                }
+                
+                .upload-container {
+                    border: 1px dashed var(--gray-1);
+                    padding: 1rem;
+                    border-radius: 6px;
+                    text-align: center;
+                }
+                
+                .file-label {
+                    cursor: pointer;
+                    width: 100%;
+                }
+                
+                .current-image-hint {
+                    font-size: 0.75rem;
+                    marginTop: 0.5rem;
+                    color: var(--gray-2);
+                }
+                
+                .current-image-hint a {
+                    text-decoration: underline;
+                }
+                
+                .pointer {
+                    cursor: pointer;
+                }
+                
+                .relative {
+                    position: relative;
+                }
+                
+                .branch-dropdown {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    background: var(--surface-color);
+                    border: 1px solid var(--border-color);
+                    border-radius: 6px;
+                    margin-top: 4px;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                    z-index: 1000;
+                }
+                
+                .branch-option {
+                    padding: 0.75rem 1rem;
+                    cursor: pointer;
+                    border-bottom: 1px solid var(--border-color);
+                    transition: background 0.15s ease;
+                }
+                
+                .branch-option:hover {
+                    background: var(--secondary-color);
+                }
+                
+                .modal-footer {
+                    display: flex;
+                    gap: 1rem;
+                    margin-top: 1.5rem;
+                    justify-content: flex-end;
+                }
+                
+                .save-btn {
+                    min-width: 100px;
+                }
+
+                .form-group {
+                    width: 100%;
+                }
+
+                .form-input {
+                    width: 100% !important;
+                    box-sizing: border-box;
+                }
+
+                @media (max-width: 1024px) {
+                    .modern-table-container {
+                        background: none;
+                        border: none;
+                        box-shadow: none;
+                        overflow: visible;
+                    }
+                    
+                    .modern-table thead {
+                        display: none;
+                    }
+                    
+                    .modern-table, .modern-table tbody, .modern-table tr, .modern-table td {
+                        display: block;
+                        width: 100%;
+                    }
+                    
+                    .modern-table tr {
+                        margin-bottom: 1rem;
+                        background: var(--surface-color);
+                        border-radius: 12px;
+                        border: 1px solid var(--border-color);
+                        padding: 1rem;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    }
+                    
+                    .modern-table td {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0.75rem 0;
+                        border-bottom: 1px solid var(--border-color);
+                        text-align: right;
+                        white-space: normal;
+                    }
+                    
+                    .modern-table td:last-child {
+                        border-bottom: none;
+                        padding-top: 1rem;
+                        justify-content: center;
+                    }
+                    
+                    .modern-table td::before {
+                        content: attr(data-label);
+                        float: left;
+                        font-weight: 600;
+                        color: var(--text-primary);
+                        font-size: 0.85rem;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                    }
+                    
+                    .action-buttons {
+                        justify-content: center;
+                        width: 100%;
+                    }
+                    
+                    .orders-modal {
+                        width: 98%;
+                        padding: 1rem;
+                    }
+                    
+                    .form-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                    }
+                }
+                
+                @media (max-width: 640px) {
+                    .orders-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 1rem;
+                    }
+                    
+                    .btn-primary {
+                        width: 100%;
+                    }
+                }
+            `}</style>
+        </div>
     );
 }

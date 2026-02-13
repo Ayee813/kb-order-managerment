@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { _ } from "../common/i18n.tsx";
 import { Icons } from "../common/icons.tsx";
+import AnimatedClock from "../components/AnimatedClock.tsx";
 
 // Simplified Order interface for Dashboard
 interface Order {
@@ -77,8 +78,12 @@ export default function Dashboard() {
     }, []);
 
     const formatCurrency = (val: number) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
-        // Adjust currency locale if needed, assuming USD/Generic for now based on context
+        return new Intl.NumberFormat('lo-LA', {
+            style: 'currency',
+            currency: 'LAK',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        }).format(val);
     };
 
     const getStatusBadge = (status: string) => {
@@ -110,7 +115,7 @@ export default function Dashboard() {
                 <div class="card kpi-card">
                     <div class="kpi-content">
                         <div class="kpi-icon-wrapper bg-orange">
-                            <Icons.IconLoader2 size={24} />
+                            <AnimatedClock size={30} />
                         </div>
                         <div>
                             <div class="stat-label">{_('Pending')}</div>
@@ -161,7 +166,7 @@ export default function Dashboard() {
                                             <span class="customer-name">{o.Customer_Name}</span>
                                         </td>
                                         <td data-label="Product" class="product-cell">{o.Product}</td>
-                                        <td data-label="Amount" class="amount-cell">{o.Price}</td>
+                                        <td data-label="Amount" class="amount-cell">{formatCurrency(parseFloat(o.Price?.replace(/[^0-9.-]+/g, "") || "0"))}</td>
                                         <td data-label="Status">{getStatusBadge(o.Status)}</td>
                                     </tr>
                                 )) : (
@@ -348,6 +353,12 @@ export default function Dashboard() {
                     }
                     
                     /* Responsive Table: Card View for Mobile */
+                    .modern-table-container {
+                        background: none;
+                        border: none;
+                        box-shadow: none;
+                        overflow: visible;
+                    }
                     .modern-table thead {
                         display: none;
                     }
@@ -374,7 +385,7 @@ export default function Dashboard() {
                         content: attr(data-label);
                         float: left;
                         font-weight: 600;
-                        color: var(--gray-2);
+                        color: var(--text-primary);
                         font-size: 0.85rem;
                     }
                     /* Special case for status to be full width or right aligned properly */

@@ -26,8 +26,8 @@ export default function ({ visible }: { visible: boolean }) {
         <div className="stuff__option">
             <span className="option__title">{_('speed')}</span>
             {Object.entries(SPEED_RANGE).map(([label, speed_]) => <button className="option__item" value={speed_}
-                    onClick={() => set_speed(speed_)} data-key={visible ? "" : undefined}
-                    data-selected={speed === speed_}>
+                onClick={() => set_speed(speed_)} data-key={visible ? "" : undefined}
+                data-selected={speed === speed_}>
                 <span className="stuff__label">{_(label)}</span>
             </button>)}
             <input className="option__item" type="number" min={4} max={0xff} value={speed} onInput={mkset(set_speed)} data-key={visible ? "" : undefined} />
@@ -36,8 +36,8 @@ export default function ({ visible }: { visible: boolean }) {
         <div className="stuff__option">
             <span className="option__title">{_('strength')}</span>
             {Object.entries(ENERGY_RANGE).map(([label, energy_]) => <button className="option__item" value={energy_}
-                    onClick={()=>set_energy(energy_)} data-key={visible ? "" : undefined}
-                    data-selected={energy === energy_}>
+                onClick={() => set_energy(energy_)} data-key={visible ? "" : undefined}
+                data-selected={energy === energy_}>
                 <span className="stuff__label">{_(label)}</span>
             </button>)}
 

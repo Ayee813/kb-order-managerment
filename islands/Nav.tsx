@@ -135,15 +135,16 @@ export default function NavBar(props: NavProps) {
                     .desktop-label { display: none; }
 
                     .nav-container {
-                        border-bottom: 1px solid var(--gray-1);
+                        border-bottom: none;
+                        position: static;
                     }
                     
-                    /* Keep brand at top */
+                    /* Hide brand at top */
                     .nav-content {
-                        justify-content: center; /* Center logo on mobile header */
+                        padding: 0;
                     }
                     .nav-brand {
-                        margin-bottom: 0;
+                        display: none;
                     }
 
                     /* Move links to bottom fixed bar */
