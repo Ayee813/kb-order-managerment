@@ -3,7 +3,7 @@
   "appName": "kb-order",
   "webDir": "static",
   "server": {
-    "url": "https://kb-order-managerment.deno.dev",
+    "url": "http://192.168.1.12:8000",
     "cleartext": true
   }
 }

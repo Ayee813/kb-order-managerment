@@ -121,7 +121,7 @@ export default function KittyPrinter(props: KittyPrinterProps) {
                             const orders = JSON.parse(ordersStr);
                             const order = orders.find((o: any) => o.Order_ID === orderId);
                             if (order) {
-                                initialText = `---------------------\nຟາກ : Bai garden\nເບີ : 99836715\nຮັບ : ${order.Customer_Name}\nເບີ : ${order.Phone_Number || ''}\nສາຂາ : ${order.Branch}\nCOD : ${order.COD}\n---------------------`;
+                                initialText = `-------------------------------------------------\n.\n-------------------------------------------------\nຟາກ : Bai garden\nເບີ : 99836715\nຮັບ : ${order.Customer_Name}\nເບີ : ${order.Phone_Number || ''}\nສາຂາ : ${order.Branch}\nCOD : ${order.COD}\n-------------------------------------------------`;
                                 textAlign = 'start';
                             }
                         }
@@ -147,7 +147,8 @@ export default function KittyPrinter(props: KittyPrinterProps) {
 
     useEffect(() => {
         document.addEventListener('paste', () => {
-            if (document.activeElement.type !== "textarea") {
+            const activeElement = document.activeElement as HTMLTextAreaElement | null;
+            if (activeElement && activeElement.type !== "textarea") {
                 dispatch({
                     action: 'add',
                     stuff: { type: 'text', id: 0, triggerPaste: true }

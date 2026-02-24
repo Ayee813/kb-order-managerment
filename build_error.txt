@@ -1,0 +1,38 @@
+[0m[32mTask[0m [0m[36mbuild[0m deno run -A dev.ts build
+The manifest has been generated for 7 routes and 6 islands.
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+✘ [ERROR] Cannot convert undefined or null to object [plugin deno-loader]
+
+[0m[1m[31merror[0m: Uncaught (in promise) Error: Build failed with 9 errors:
+error: Cannot convert undefined or null to object
+error: Cannot convert undefined or null to object
+error: Cannot convert undefined or null to object
+error: Cannot convert undefined or null to object
+error: Cannot convert undefined or null to object
+...
+  let error = new Error(text);
+[0m[31m              ^[0m
+    at [0m[1m[3mfailureErrorWithLog[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1626[0m:[0m[33m15[0m)
+    at [0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1034[0m:[0m[33m25[0m
+    at [0m[1m[3mrunOnEndCallbacks[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1461[0m:[0m[33m45[0m)
+    at [0m[1m[3mbuildResponseToResult[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1032[0m:[0m[33m7[0m)
+    at [0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1061[0m:[0m[33m16[0m
+    at [0m[1m[3mresponseCallbacks.<computed>[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m679[0m:[0m[33m9[0m)
+    at [0m[1m[3mhandleIncomingPacket[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m739[0m:[0m[33m9[0m)
+    at [0m[1m[3mreadFromStdout[0m ([0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m655[0m:[0m[33m7[0m)
+    at [0m[36mhttps://deno.land/x/esbuild@v0.19.11/mod.js[0m:[0m[33m1933[0m:[0m[33m11[0m

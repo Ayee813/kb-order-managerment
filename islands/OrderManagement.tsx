@@ -1,3 +1,5 @@
+/// <reference types="preact" />
+import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { _ } from "../common/i18n.tsx";
 import { Icons } from "../common/icons.tsx";

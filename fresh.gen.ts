@@ -15,7 +15,7 @@ import * as $KittyPrinter from "./islands/KittyPrinter.tsx";
 import * as $Nav from "./islands/Nav.tsx";
 import * as $OrderManagement from "./islands/OrderManagement.tsx";
 import * as $PwaUpdate from "./islands/PwaUpdate.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {

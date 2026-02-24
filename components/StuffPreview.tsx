@@ -27,7 +27,7 @@ export default function StuffPreview(props: StuffPainterProps) {
     let line_height;
     let msg: ImageWorkerMessage;
     let imagedata: ImageData;
-    (async function() {
+    (async function () {
         switch (stuff.type) {
             case 'text':
                 ctx.fillStyle = 'black';
@@ -45,7 +45,7 @@ export default function StuffPreview(props: StuffPainterProps) {
                 ctx.font = font;
                 measured = strings.map(s => ctx.measureText(s));
                 line_height = stuff.textLineSpacing! + Math.max(...measured.map(m => m.actualBoundingBoxAscent), stuff.textFontSize!);
-                
+
                 const text_intrinsic_height = line_height * strings.length + stuff.textLineSpacing!;
 
                 const needs_flip = is_rotated_sideways
@@ -103,9 +103,9 @@ export default function StuffPreview(props: StuffPainterProps) {
                             'center': (width - measured[i].width) / 2,
                             'end': width - measured[i].width,
                             'justify': 0
-                        })[effectiveTextAlign] + (shiftMultiplier * stuff.textShift! * width);
+                        })[effectiveTextAlign as 'start' | 'center' | 'end' | 'justify'] + (shiftMultiplier * stuff.textShift! * width);
                     }
-                    
+
                     const anchor_y = y_offset + line_height * (i + 1);
 
                     if (stuff.textStroked) {
