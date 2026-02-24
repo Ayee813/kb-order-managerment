@@ -12,6 +12,7 @@ interface Order {
     Phone_Number: string;
     Product: string;
     Price: string;
+    Category: string;
     Qty: string;
     COD: string;
     Logistic: string;
@@ -27,6 +28,7 @@ const HEADERS = [
     "Phone_Number",
     "Product",
     "Price",
+    "Category",
     "Qty",
     "COD",
     "Logistic",
@@ -228,7 +230,7 @@ export default function OrderManagement() {
                                 {orders.map((o) => (
                                     <tr key={o.rowIndex}>
                                         {HEADERS.map((h) => (
-                                            <td data-label={h.replace(/_/g, " ")}>
+                                            <td data-label={h.replace(/_/g, " ")} class={`col-${h.toLowerCase()}`}>
                                                 {h === "Image_Link" && o[h] ? (
                                                     <a href={o[h]} target="_blank" class="btn btn-ghost view-image-btn">
                                                         <Icons.IconPhoto size={16} /> View
@@ -450,6 +452,25 @@ export default function OrderManagement() {
                                         );
                                     }
 
+                                    // Special handling for Category field - use select dropdown
+                                    if (h === "Category") {
+                                        return (
+                                            <div class="form-group">
+                                                <label class="form-label">{h.replace(/_/g, " ")}</label>
+                                                <select
+                                                    class="form-input pointer"
+                                                    value={(editingOrder as Order)[h] || ""}
+                                                    onChange={(e) => setEditingOrder({ ...editingOrder, [h]: (e.target as HTMLSelectElement).value })}
+                                                    required
+                                                >
+                                                    <option value="">Select Category</option>
+                                                    <option value="ອຸປະກອນ">ອຸປະກອນ</option>
+                                                    <option value="ຊໍ່ດອກໄມ້">ຊໍ່ດອກໄມ້</option>
+                                                </select>
+                                            </div>
+                                        );
+                                    }
+
                                     // Special handling for COD field - use formatted number input
                                     if (h === "COD" || h === "Price") {
                                         return (
@@ -458,7 +479,7 @@ export default function OrderManagement() {
                                                 <input
                                                     type="text"
                                                     class="form-input"
-                                                    value={formatNumber((editingOrder as any)[h] || "")}
+                                                    value={formatNumber((editingOrder as Order)[h] || "")}
                                                     onInput={(e) => {
                                                         const value = (e.target as HTMLInputElement).value;
                                                         // Remove commas and store the raw number
@@ -511,8 +532,7 @@ export default function OrderManagement() {
                 .orders-page-container {
                     padding: 1.5rem;
                     width: 100%;
-                    max-width: 1200px;
-                    margin: 0 auto;
+                    max-width: none;
                 }
                 
                 .orders-header {
@@ -694,26 +714,89 @@ export default function OrderManagement() {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        padding: 0.75rem 0;
+                        padding: 0.5rem 0;
                         border-bottom: 1px solid var(--border-color);
                         text-align: right;
                         white-space: normal;
+                        min-height: 2.5rem;
                     }
-                    
-                    .modern-table td:last-child {
-                        border-bottom: none;
-                        padding-top: 1rem;
+
+                    /* Hide labels (keys) for most fields to save space on mobile */
+                    .modern-table td.col-order_id::before,
+                    .modern-table td.col-customer_name::before,
+                    .modern-table td.col-product::before,
+                    .modern-table td.col-status::before,
+                    .modern-table td.col-phone_number::before,
+                    .modern-table td.col-branch::before,
+                    .modern-table td.col-image_link::before {
+                        display: none;
+                    }
+
+                    /* Center the fields that don't have labels */
+                    .modern-table td.col-order_id,
+                    .modern-table td.col-customer_name,
+                    .modern-table td.col-product,
+                    .modern-table td.col-status,
+                    .modern-table td.col-phone_number,
+                    .modern-table td.col-branch,
+                    .modern-table td.col-image_link {
                         justify-content: center;
+                        text-align: center;
+                    }
+
+                    /* Style for specific fields to make them look like titles/badges */
+                    .modern-table td.col-customer_name {
+                        font-weight: 700;
+                        font-size: 1.1rem;
+                        color: var(--primary-color);
+                        padding-top: 1rem;
+                        border-bottom: none;
+                    }
+
+                    .modern-table td.col-order_id {
+                        font-size: 0.75rem;
+                        color: var(--gray-2);
+                        padding-bottom: 0;
+                        border-bottom: none;
+                    }
+
+                    .modern-table td.col-product {
+                        font-weight: 500;
+                        padding-bottom: 0.75rem;
                     }
                     
+                    .modern-table td.col-phone_number {
+                        font-size: 0.85rem;
+                        color: var(--gray-3);
+                        border-bottom: none;
+                        padding-top: 0;
+                    }
+
+                    .modern-table td.col-status {
+                        padding-bottom: 1rem;
+                    }
+
+                    .modern-table td.col-branch {
+                        font-size: 0.75rem;
+                        color: var(--gray-2);
+                    }
+                    
+                    /* Keep labels for numeric values where context might be needed */
                     .modern-table td::before {
                         content: attr(data-label);
                         float: left;
                         font-weight: 600;
                         color: var(--text-primary);
-                        font-size: 0.85rem;
+                        font-size: 0.75rem;
                         text-transform: uppercase;
                         letter-spacing: 0.05em;
+                        opacity: 0.7;
+                    }
+                    
+                    .modern-table td:last-child {
+                        border-bottom: none;
+                        padding: 1rem 0;
+                        justify-content: center;
                     }
                     
                     .action-buttons {
