@@ -1,14 +1,26 @@
-# dotenv environment variable files
+# Dependencies
+node_modules/
+.lucia/
+
+# Build outputs
+dist/
+_fresh/
+*.exe
+
+# IDEs and Tools
+.vscode/
+.idea/
+*.kate-swp
+*.swp
+.DS_Store
+
+# Environment variables
 .env
 .env.development.local
 .env.test.local
 .env.production.local
 .env.local
 
-# Fresh build directory
-_fresh/
-
-*.kate-swp
+# SSL
 ca.crt
 ca.key
-kitty-printer.exe
